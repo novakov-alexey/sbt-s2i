@@ -6,12 +6,14 @@ ENV SCALA_VERSION=${SCALA_VERSION:-2.12.9}
 ENV SBT_S2I_BUILDER_VERSION=0.1
 ENV IVY_DIR=/opt/app-root/src/.ivy2
 ENV SBT_DIR=/opt/app-root/src/.sbt
+ENV S2I_HOME=/usr/libexec/s2i
 
 LABEL io.k8s.display-name="sbt-s2i $SBT_S2I_BUILDER_VERSION" \
       io.k8s.description="S2I Builder with cached SBT $SBT_VERSION and Scala $SCALA_VERSION" \
       io.openshift.expose-services="9000:http" \
       io.openshift.tags="builder,sbt,scala" \
-      io.openshift.min-memory="1Gi"
+      io.openshift.min-memory="1Gi" \
+      io.openshift.s2i.scripts-url="image://${S2I_HOME}"
 
 USER root
 
@@ -34,7 +36,7 @@ RUN mkdir -p /tmp/caching/project /opt/app-root/bin \
  && chmod -R g+rw /opt/app-root \
  && rm -rf /tmp/*
 
-COPY ./s2i/bin/ /usr/libexec/s2i
+COPY ./s2i/bin/ ${S2I_HOME}
 
 USER 1001
 EXPOSE 9000
