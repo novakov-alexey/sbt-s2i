@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM openshift/base-centos7
 
 ENV SBT_VERSION=${SBT_VERSION:-1.2.8}
 ENV SCALA_VERSION=${SCALA_VERSION:-2.12.9}
