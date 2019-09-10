@@ -24,7 +24,9 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
 fi
 
 echo "---> Installing application source..."
-cp -Rf /tmp/src/. ./
+
+# working from initial s2i source dir
+cd /tmp/src/
 
 echo "---> Building application from source..."
 sbt -v -sbt-dir ${SBT_DIR} -sbt-boot ${SBT_DIR}/boot -ivy ${IVY_DIR} ${sbt_stage_cmd}

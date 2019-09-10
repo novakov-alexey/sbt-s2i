@@ -9,6 +9,9 @@
 # https://superuser.com/a/38982 for find
 #
 
+# working from initial s2i source dir
+cd /tmp/src/
+
 readonly sbt_run_cmd="${SBT_SUBPROJECT:+${SBT_SUBPROJECT}/}run"
 readonly sbt_target_dir="${SBT_SUBPROJECT:+${SBT_SUBPROJECT}/}target"
 readonly staging_path="universal/stage/bin"
