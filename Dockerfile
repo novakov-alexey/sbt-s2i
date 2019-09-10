@@ -1,7 +1,10 @@
 FROM centos:centos7
 
-ENV SBT_VERSION=${SBT_VERSION:-1.2.8}
-ENV SCALA_VERSION=${SCALA_VERSION:-2.12.9}
+ARG SBT_VERSION=1.3.0
+ARG SCALA_VERSION=2.13
+
+ENV SBT_VERSION=${SBT_VERSION}
+ENV SCALA_VERSION=${SCALA_VERSION}
 
 ENV SBT_S2I_BUILDER_VERSION=0.1
 ENV IVY_DIR=/opt/app-root/src/.ivy2
@@ -34,7 +37,10 @@ RUN mkdir -p /tmp/caching/project /opt/app-root/bin \
  && sbt -v -sbt-dir $SBT_DIR -sbt-boot $SBT_DIR/boot -ivy $IVY_DIR compile \
  && chown -R 1001:0 /opt/app-root \
  && chmod -R g+rw /opt/app-root \
- && rm -rf /tmp/*
+ && rm -rf /tmp/* \
+ && mkdir -p ${S2I_HOME} \
+ && chown -R 1001:0 ${S2I_HOME} \ 
+ && chmod -R g+rw ${S2I_HOME}
 
 COPY ./s2i/bin/ ${S2I_HOME}
 
